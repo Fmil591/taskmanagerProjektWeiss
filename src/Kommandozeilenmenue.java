@@ -1,5 +1,6 @@
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Scanner;
 
 public class Kommandozeilenmenue {
@@ -8,7 +9,7 @@ private ListeAllerAufgaben l = new ListeAllerAufgaben();
    private GregorianCalendar deadline = new GregorianCalendar(2024, Calendar.JUNE,5);
 
    private Aufgabe a1 = new Aufgabe("APR HÜ machen");
-   private AufgabeMitDeadline aMD2 = new AufgabeMitDeadline("Module machen",deadline);
+   private AufgabeMitDeadline aMD1 = new AufgabeMitDeadline("Module machen",deadline);
    private Aufgabe a2 = new Aufgabe("Schule gehen");
 
 
@@ -42,17 +43,41 @@ private ListeAllerAufgaben l = new ListeAllerAufgaben();
                     l.alleAufgabenAusgeben();
                     break;
                 case "2":
-                    this.rechnen();
+                    System.out.println("Bitte geben Sie einen Teil des Aufgabennamens ein, um die zu finden, die Ihrer Beschreibung entsprechen: ");
+                    String suche = scan.nextLine();
+                    l.sucheUndDruckeAufgaben(suche);
+
+
                     break;
                 case "3":
-                    break;
-                default:
-                    this.fehler();
+                    l.druckeDeadlines();
                     break;
                 case "4":
                     l.aufgabeHinzufügen(a1);
-                    l.aufgabeHinzufügen(aMD2);
+                    l.aufgabeHinzufügen(aMD1);
                     l.aufgabeHinzufügen(a2);
+                    break;
+                case "5":
+                    String sucheErledigen = scan.nextLine();
+                    List<Aufgabe> gefundeneAufgabe = l.sucheUndGibAufgaben(sucheErledigen);
+
+                    if (gefundeneAufgabe.isEmpty()) {
+                        System.out.println("Keine Aufgaben gefunden.");
+                        break;
+                    }
+
+                    for (Aufgabe a : gefundeneAufgabe) {
+                        System.out.println("Aufgabe: " + a.toString());
+                        System.out.println("Diese Aufgabe löschen? (0: nein, 1: ja)");
+                        String wahlauswaehlen = scan.nextLine();
+                        if (wahlauswaehlen.equals("1")) {
+                            l.entferneAufgabe(a);
+                            System.out.println("Aufgabe gelöscht.");
+                        }
+                    }
+                    break;
+                case "x":
+                    System.exit(0);
                     break;
 
             }
@@ -72,7 +97,7 @@ private ListeAllerAufgaben l = new ListeAllerAufgaben();
 
     public void fehler()
     {
-        System.out.println("Sie k�nnen nur 1,2 oder 3 eingeben!");
+        System.out.println("Sie können nur 1,2 oder 3 eingeben!");
     }
 
 

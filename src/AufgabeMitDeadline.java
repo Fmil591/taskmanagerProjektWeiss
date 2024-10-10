@@ -5,8 +5,13 @@ public class AufgabeMitDeadline extends Aufgabe{
 
     GregorianCalendar deadline;
 
+
+
+
+
+
     public String getDeadline() {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
         return sdf.format(deadline.getTime());
     }
